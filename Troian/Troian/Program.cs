@@ -14,10 +14,18 @@ namespace ConsoleApp2
     class Program
     {
         string path=null;
-        void OpenApplication(string myFavoritesPath)
+        string OpenApplication(string myFavoritesPath)
         {
-            // Display the contents of the favorites folder in the browser.
-            Process.Start(myFavoritesPath);
+
+            try
+            {
+                Process.Start(myFavoritesPath);
+                return myFavoritesPath+" Ok";
+            }
+            catch
+            {
+                return "Eroare la deschiderea " + myFavoritesPath;
+            }
         }
 
         string ExecuteCom(string comanda)
@@ -71,12 +79,13 @@ namespace ConsoleApp2
             return s;
         }
 
-        void Update(string filename,string date)
+        string Update(string filename,string date)
         {
             using (StreamWriter sw = File.AppendText(filename))
             {
                 sw.WriteLine(date);
             }
+            return null;
         }
 
         string Read(string filename,string date)
@@ -116,7 +125,7 @@ namespace ConsoleApp2
         {
             String comanda;
             Program myProcess = new Program();
-            string s;
+            string s="";
             do
             {
                 comanda = Console.ReadLine();
@@ -126,26 +135,27 @@ namespace ConsoleApp2
                 switch (words[0])
                 {
                     case "open":
-                        myProcess.OpenApplication(words[1]);
+                        s = myProcess.OpenApplication(words[1]);
                         break;
                     case "cmd":
                         s = myProcess.ExecuteCom(comanda.Remove(0,4));
-                        Console.WriteLine("!!!!!\n" + s + "?????");
+                        
                         break;
                     case "update":
-                        myProcess.Update(words[1], comanda.Remove(0, 8 + words[1].Length));
+                        s = myProcess.Update(words[1], comanda.Remove(0, 8 + words[1].Length));
                         break;
                     case "read":
                         s = myProcess.Read(words[1], comanda.Remove(0, 5));
-                        Console.WriteLine("!!!!!\n" + s + "??????");
                         break;
                     default:
                         Console.WriteLine("Default case");
                         break;
                 }
+                Console.WriteLine("!!!!!\n" + s + "?????");
                 Console.WriteLine(comanda);
             } while (comanda != "exit");
 
+            
             comanda = Console.ReadLine();
 
         }
