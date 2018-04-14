@@ -1,0 +1,7 @@
+C:\Users\Andrei\source\repos\Troian\Troian\bin\Debug\Troian.exe.config
+C:\Users\Andrei\source\repos\Troian\Troian\bin\Debug\Troian.exe
+C:\Users\Andrei\source\repos\Troian\Troian\bin\Debug\Troian.pdb
+C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.csprojResolveAssemblyReference.cache
+C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.csproj.CoreCompileInputs.cache
+C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.exe
+C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.pdb
