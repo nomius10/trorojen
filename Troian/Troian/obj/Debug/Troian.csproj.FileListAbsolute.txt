@@ -5,3 +5,10 @@ C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.csprojResolveAssembl
 C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.csproj.CoreCompileInputs.cache
 C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.exe
 C:\Users\Andrei\source\repos\Troian\Troian\obj\Debug\Troian.pdb
+E:\trorojen\Troian\Troian\bin\Debug\Troian.exe.config
+E:\trorojen\Troian\Troian\bin\Debug\Troian.exe
+E:\trorojen\Troian\Troian\bin\Debug\Troian.pdb
+E:\trorojen\Troian\Troian\obj\Debug\Troian.csprojResolveAssemblyReference.cache
+E:\trorojen\Troian\Troian\obj\Debug\Troian.csproj.CoreCompileInputs.cache
+E:\trorojen\Troian\Troian\obj\Debug\Troian.exe
+E:\trorojen\Troian\Troian\obj\Debug\Troian.pdb

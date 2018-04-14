@@ -13,15 +13,17 @@ namespace ConsoleApp2
 {
     class Program
     {
-
+        string path=null;
         void OpenApplication(string myFavoritesPath)
         {
             // Display the contents of the favorites folder in the browser.
             Process.Start(myFavoritesPath);
         }
 
-        void ExecuteCom(string comanda)
+        string ExecuteCom(string comanda)
         {
+            string s="";
+            bool outcmd= false;
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
@@ -34,10 +36,39 @@ namespace ConsoleApp2
             var process = new Process { StartInfo = startInfo };
 
             process.Start();
+            if (path != null)
+                process.StandardInput.WriteLine("cd " + path);
             process.StandardInput.WriteLine(comanda);
-            process.StandardInput.WriteLine("exit");
 
+            process.StandardInput.WriteLine("exit");
+            using (StreamReader streamReader = process.StandardOutput)
+            {
+                s = streamReader.ReadToEnd();
+            }
             process.WaitForExit();
+            StringReader strReader = new StringReader(s);
+            s = "";
+            while (true)
+            {
+                path = strReader.ReadLine();
+                if (path.Contains("exit") == true)
+                {
+                    path = path.Remove(path.Length - 5);
+                    break;
+                }
+                if (outcmd == true)
+                    s += path+"\n";
+                if (path.Length > comanda.Length)
+                {
+                    path = path.Substring(path.Length - comanda.Length);
+                }
+                if (path.Equals(comanda) == true)
+                {
+                    outcmd = true;
+                }
+                
+            }
+            return s;
         }
 
         void Update(string filename,string date)
@@ -46,7 +77,19 @@ namespace ConsoleApp2
             {
                 sw.WriteLine(date);
             }
-            //File.WriteAllText(filename, date);
+        }
+
+        string Read(string filename,string date)
+        {
+            string s = "";
+            using (StreamReader sr = File.OpenText(filename))
+            {
+                while ((s = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+            return s;
         }
 
         String GetHttp()
@@ -73,7 +116,7 @@ namespace ConsoleApp2
         {
             String comanda;
             Program myProcess = new Program();
-
+            string s;
             do
             {
                 comanda = Console.ReadLine();
@@ -86,10 +129,15 @@ namespace ConsoleApp2
                         myProcess.OpenApplication(words[1]);
                         break;
                     case "cmd":
-                        myProcess.ExecuteCom(comanda.Remove(0,4));
+                        s = myProcess.ExecuteCom(comanda.Remove(0,4));
+                        Console.WriteLine("!!!!!\n" + s + "?????");
                         break;
                     case "update":
                         myProcess.Update(words[1], comanda.Remove(0, 8 + words[1].Length));
+                        break;
+                    case "read":
+                        s = myProcess.Read(words[1], comanda.Remove(0, 5));
+                        Console.WriteLine("!!!!!\n" + s + "??????");
                         break;
                     default:
                         Console.WriteLine("Default case");
