@@ -1,0 +1,11 @@
+C:\Users\nomius\source\repos\CCconsole\CCconsole\bin\Debug\netcoreapp2.0\CCconsole.deps.json
+C:\Users\nomius\source\repos\CCconsole\CCconsole\bin\Debug\netcoreapp2.0\CCconsole.runtimeconfig.json
+C:\Users\nomius\source\repos\CCconsole\CCconsole\bin\Debug\netcoreapp2.0\CCconsole.runtimeconfig.dev.json
+C:\Users\nomius\source\repos\CCconsole\CCconsole\bin\Debug\netcoreapp2.0\CCconsole.dll
+C:\Users\nomius\source\repos\CCconsole\CCconsole\bin\Debug\netcoreapp2.0\CCconsole.pdb
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.csprojResolveAssemblyReference.cache
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.csproj.CoreCompileInputs.cache
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.AssemblyInfoInputs.cache
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.AssemblyInfo.cs
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.dll
+C:\Users\nomius\source\repos\CCconsole\CCconsole\obj\Debug\netcoreapp2.0\CCconsole.pdb
