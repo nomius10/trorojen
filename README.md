@@ -4,8 +4,8 @@
 
 sudo apt-get install mono-devel
 
-// analog javac
+// compilare, analog javac  
 mcs Program.cs
 
-// rulare
+// rulare  
 sudo mono Program.exe
